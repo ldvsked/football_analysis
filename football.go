@@ -1,5 +1,7 @@
 package main 
 
+import "slices"
+
 type Player struct {
 	Name string 
 	Goals int 
@@ -21,3 +23,18 @@ func NewPlayer(name string, goals, misses, assists int) Player {
 	newPlayer.calculateRating()
 	return newPlayer
 }
+
+func goalsSort(players []Player) []Player {
+	slices.SortFunc(players, func (a, b Player) int {
+		switch{
+		case a.Goals < b.Goals: 
+			return 1
+		case a.Goals > b. Goals:
+			return -1
+		default:
+			return 0
+		}
+	})
+	return players
+}
+
