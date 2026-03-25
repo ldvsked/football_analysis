@@ -32,9 +32,66 @@ func goalsSort(players []Player) []Player {
 		case a.Goals > b. Goals:
 			return -1
 		default:
-			return 0
+			if a.Name < b.Name {
+				return -1 
+			} else if a.Name > b.Name {
+				return 1
+			} else {
+				return 0
+			}
 		}
 	})
 	return players
 }
 
+func ratingSort(players []Player) []Player {
+	slices.SortFunc(players, func(a, b Player) int {
+		switch {
+		case a.Rating > b.Rating:
+			return -1
+		case a.Rating < b.Rating:
+			return 1
+		default:
+			if a.Name < b.Name {
+				return -1 
+			} else if a.Name > b.Name {
+				return 1
+			} else {
+				return 0
+			}
+		}
+	})
+	return players
+}
+
+func playerGm(player Player) float64 {
+	var pGm float64 
+	if player.Misses != 0 {
+		pGm = float64(player.Goals) / float64(player.Misses)
+	} else {
+		pGm = float64(player.Goals)
+	}
+	return pGm
+}
+
+func gmSort(players []Player) []Player {
+	slices.SortFunc(players, func(a, b Player) int {
+		aGm := playerGm(a)
+		bGm := playerGm(b)
+		switch {
+		case aGm > bGm:
+			return -1
+		case aGm > bGm:
+			return 1
+		default:
+			if a.Name < b.Name {
+				return -1 
+			} else if a.Name > b.Name {
+				return 1
+			} else {
+				return 0
+			}
+		}
+	})
+	return players
+}
